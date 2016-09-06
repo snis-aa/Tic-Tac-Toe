@@ -1,0 +1,334 @@
+<html>
+
+	
+<head>
+
+		
+<style>
+
+
+body {
+
+background-color: #F7F7F7;
+
+}
+
+table, tr, td {
+border: 2px solid black;
+background-color:#464646;
+color:#F7F7F7;
+
+}
+
+h1 {
+
+text-align: center;
+
+}
+
+h2 {
+
+
+text-align: center;
+
+}
+
+.Header {
+
+margin:10; 
+padding:10;
+
+}
+
+.Button{
+border: 2px solid black;
+background-color:#464646;
+width: 150px;
+height: 35px;
+font-weight: bold;
+font-size:100%
+background-color:#464646;
+color:#F7F7F7;
+}
+			
+.Cell {
+			
+width: 80px;
+height: 90px;
+text-align: center;
+font-size: 40pt;
+font-weight: bold;
+font-family: Verdana;
+color: #F7F7F7;
+		
+}
+
+.Score {
+			
+width: 80px;
+height: 40px;
+text-align: center;
+font-size: 15pt;
+font-weight: bold;
+font-family: Verdana;
+		
+}	
+	
+</style>
+
+		
+		
+<script>
+
+var	x_score = 0 ;
+var o_score = 0;	
+		
+function start() {
+   
+for (var i = 1; i <= 9; i = i + 1) { clearCell(i); }
+    
+    document.turn = document.querySelector('input[name=choose]:checked').value;
+  	
+if (winner(document.turn)=="X") { document.turn = "O"; }
+ 			
+document.winner = null;
+		
+}
+
+    function seto_Score(o_scor) {
+			
+document.getElementById("o_score").innerText = o_scor;
+		
+}
+    function setx_Score(x_scor) {
+			
+document.getElementById("x_score").innerText = x_scor;
+		
+}
+		
+function setMessage(msg) {
+			
+document.getElementById("message").innerText = msg;
+		
+}
+		
+		
+function nextTurn(Cell) {
+			
+if (document.winner != null) {
+				
+setMessage(document.winner + " already won the game.");
+			
+} else if (Cell.innerText == "") {
+				
+Cell.innerText = document.turn;
+				
+switchPlayer();
+			} else {
+				
+setMessage("That Cell is already used.");
+			
+}
+		}
+		
+		
+function switchPlayer() {
+		
+			
+if (winner(document.turn)) {
+				
+setMessage("Congratulations, " + document.turn + "!  You win!");
+				
+document.winner = document.turn;
+    
+    if (document.turn=="X"){
+        x_score++;
+        
+    setx_Score(x_score);
+        
+    } else{
+        o_score++;
+        seto_Score(o_score);
+        
+    }
+			
+} else if (document.turn == "X") {
+				
+document.turn = "O";
+				
+setMessage("It's " +  document.turn + "'s turn!");
+			
+} else {
+				
+document.turn = "X";
+				
+setMessage("It's " + document.turn + "'s turn!");
+			
+}
+		
+}
+		
+		
+function winner(move) {
+			
+var result = false;
+
+
+			
+if (checkCell(1, 2, 3, move) || 
+				
+checkCell(4, 5, 6, move) ||
+				
+checkCell(7, 8, 9, move) || 
+				
+checkCell(1, 4, 7, move) ||
+				
+checkCell(2, 5, 8, move) ||
+				
+checkCell(3, 6, 9, move) ||
+				
+checkCell(1, 5, 9, move) ||
+				
+checkCell(3, 5, 7, move)) {
+				
+				
+result = true;
+
+
+			
+}
+			
+return result;
+		}
+		
+		
+function checkCell(a, b, c, move) {
+			
+var result = false;
+			
+if (getCell(a) == move && getCell(b) == move && getCell(c) == move) {
+				
+result = true;
+			
+}
+			
+return result;
+		
+}
+		
+		
+function getCell(number) {
+			
+return document.getElementById("cell_" + number).innerText;
+		
+}
+		
+		
+function clearCell(number) {
+			
+document.getElementById("cell_" + number).innerText = "";
+		
+}
+		
+		
+</script>
+
+		
+	
+</head>
+
+	
+
+<body background="http://cdn.top4top.co/i_7a62cd4e1c1.jpg"  onload="start();">
+
+		
+<h1 class="Header">Tic-Tac-Toe </h1>
+
+<center><h4>Pleaese Choose "X" or "O" , Then Click "Start Game / Restart" !</h4></center>
+
+<center>
+<lable><input  id="choose_X" type="radio" name="choose" value="X" checked="checked"/></lable>
+<tr><td>Choose X ,</td></trtr>
+ 	
+<lable><input  id="choose_O" type="radio" name="choose" value="O"/></lable><tr><td>Choose O</td></trtr>
+</center>
+<br></br>
+<center>
+
+<input class="Button" id="restart" type="button" value="Start Game / Restart" onclick="start();"/>	
+</center>
+
+<h2 class="Header"><div id="message"></div></h2>
+
+<table align="center" border="1">
+
+			
+<tr>
+				
+<td id="cell_1" class="Cell" onclick="nextTurn(this);"></td>
+				
+<td id="cell_2" class="Cell" onclick="nextTurn(this);"></td>
+				
+<td id="cell_3" class="Cell" onclick="nextTurn(this);">
+</td>
+			
+</tr>
+
+			
+<tr>
+				
+<td id="cell_4" class="Cell" onclick="nextTurn(this);"></td>
+				
+<td id="cell_5" class="Cell" onclick="nextTurn(this);"></td>
+				
+<td id="cell_6" class="Cell" onclick="nextTurn(this);"></td>
+			
+</tr>
+
+			
+<tr>
+				
+<td id="cell_7" class="Cell" onclick="nextTurn(this);"></td>
+				
+<td id="cell_8" class="Cell" onclick="nextTurn(this);"></td>
+				
+<td id="cell_9" class="Cell" onclick="nextTurn(this);"></td>
+			
+</tr>
+
+		
+</table>
+
+
+<br></br>
+
+<table align="center" border="1">
+
+<tr>
+				
+<td colspan="2" class="Score">Score </td>					
+			
+</tr>
+			
+<tr>
+				
+<td class="Score" id="x">X</td>	
+
+<td class="Score" ><div id="x_score"></div></td>				
+			
+</tr>
+
+
+<tr>
+				
+<td class="Score" id="o">O</td>	
+
+<td class="Score" ><div id="o_score"></td>				
+			
+</tr>
+</table>
+
+</body>
+
+
+</html>
